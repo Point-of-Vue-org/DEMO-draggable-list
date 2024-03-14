@@ -1,0 +1,78 @@
+<script setup>
+import DragIcon from '@/assets/icons/drag.svg?raw'
+import { ref } from 'vue'
+import ChevronDownIcon from '@/assets/icons/chevronDown.svg?raw'
+
+defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+  width: {
+    type: String,
+    default: '40rem'
+  },
+  contentHeight: {
+    type: String,
+    default: '20rem'
+  },
+  draggingItemId: {
+    type: String,
+    default: null
+  }
+})
+
+const draggable = ref(false)
+const openState = ref(false)
+// const grabbing = ref(false)
+</script>
+
+<template>
+  <li
+    :data-item-id="id"
+    :draggable="draggable"
+    :style="{ width: width }"
+    :class="{
+      'opacity-50': draggingItemId === id,
+      'cursor-grabbing': draggingItemId === id,
+      'cursor-grab': !draggingItemId
+    }"
+    class="flex flex-col items-center"
+    @drag="dragging = true"
+    @dragstart="$emit('dragstart', $event)"
+    @dragover="$emit('dragover', $event)"
+    @dragend="$emit('dragend', $event)"
+    @drop="$emit('drop', $event)"
+  >
+    <div class="w-full h-14">
+      <div class="bg-base-200 rounded-2xl h-full text-2xl font-medium flex items-center justify-between gap-4 z-10 relative">
+        <div
+          @mouseover="draggable = true"
+          @mouseleave="draggable = false"
+          class="cursor-grab w-10 h-14 flex justify-center items-center"
+        >
+          <div v-html="DragIcon"></div>
+        </div>
+        <div>
+          <slot name="title">
+            <div>Title</div>
+          </slot>
+        </div>
+        <div @click="openState = !openState" class="w-10 h-14 flex justify-center items-center">
+          <div v-html="ChevronDownIcon" :class="openState ? 'rotate-180' : 'rotate-0'" class="transition-transform"></div>
+        </div>
+      </div>
+    </div>
+    <div :style="{ height: openState ? contentHeight : '0' }" class="w-[calc(100%-2rem)] bg-neutral overflow-hidden transition-[height] rounded-b-2xl">
+      <div class="p-2">
+        <slot name="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur cum, tempore, asperiores eius obcaecati
+            voluptates quam exercitationem eum vel officia voluptatibus ad tempora repudiandae vitae architecto nemo quae
+            repellendus? Perspiciatis.</p>
+        </slot>
+      </div>
+    </div>
+  </li>
+</template>
+
+<style scoped></style>
