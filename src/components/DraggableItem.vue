@@ -22,20 +22,18 @@ defineProps({
   }
 })
 
-const draggable = ref(false)
+const dragUnlock = ref(false)
 const openState = ref(false)
-// const grabbing = ref(false)
+
 </script>
 
 <template>
   <li
     :data-item-id="id"
-    :draggable="draggable"
+    :draggable="dragUnlock"
     :style="{ width: width }"
     :class="{
-      'opacity-50': draggingItemId === id,
-      'cursor-grabbing': draggingItemId === id,
-      'cursor-grab': !draggingItemId
+      'opacity-50': draggingItemId === id
     }"
     class="flex flex-col items-center"
     @drag="dragging = true"
@@ -75,4 +73,5 @@ const openState = ref(false)
   </li>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

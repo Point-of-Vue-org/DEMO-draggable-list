@@ -1,6 +1,5 @@
 <script setup>
-import DraggableListItem from '@/components/DraggableListItem.vue'
-import DraggableList from './components/DraggableList.vue';
+import ListContainer from './components/ListContainer.vue';
 
 const items = [
   {
@@ -47,8 +46,8 @@ const items = [
 </script>
 
 <template>
-  <main class="">
-    <DraggableList :items="items" />
+  <main>
+    <ListContainer :items="items" />
   </main>
 </template>
 
