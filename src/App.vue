@@ -4,7 +4,7 @@ import ListContainer from './components/ListContainer.vue';
 const items = [
   {
     id: '1',
-    header: 'Fronend',
+    header: 'Frontend',
     content: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi accusamus unde atque exercitationem maiores sunt pariatur dicta ipsum eos aspernatur quam veniam, porro iure cum repellendus voluptatibus non! Similique, culpa.'
   },
   {

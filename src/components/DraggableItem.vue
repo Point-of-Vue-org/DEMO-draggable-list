@@ -36,7 +36,6 @@ const openState = ref(false)
       'opacity-50': draggingItemId === id
     }"
     class="flex flex-col items-center"
-    @drag="dragging = true"
     @dragstart="$emit('dragstart', $event)"
     @dragover="$emit('dragover', $event)"
     @dragend="$emit('dragend', $event)"
@@ -45,8 +44,8 @@ const openState = ref(false)
     <div class="w-full h-14">
       <div class="bg-base-200 rounded-2xl h-full text-2xl font-medium flex items-center justify-between gap-4 z-10 relative">
         <div
-          @mouseover="draggable = true"
-          @mouseleave="draggable = false"
+          @mouseover="dragUnlock = true"
+          @mouseleave="dragUnlock = false"
           class="cursor-grab w-10 h-14 flex justify-center items-center"
         >
           <div v-html="DragIcon"></div>
@@ -56,7 +55,7 @@ const openState = ref(false)
             <div>Title</div>
           </slot>
         </div>
-        <div @click="openState = !openState" class="w-10 h-14 flex justify-center items-center">
+        <div @click="openState = !openState" class="w-10 h-14 flex justify-center items-center cursor-pointer">
           <div v-html="ChevronDownIcon" :class="openState ? 'rotate-180' : 'rotate-0'" class="transition-transform"></div>
         </div>
       </div>

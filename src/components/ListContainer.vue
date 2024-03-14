@@ -9,40 +9,39 @@ const props = defineProps({
   }
 })
 
-const dragging = ref(false)
+// const dragging = ref(false)
 const dragItem = ref(null)
-const dragOverItem = ref(null)
+const dragOverElement = ref(null)
 const dragOverIndex = ref(null)
 const sortableItems = ref(props.items)
-
-const handleDragStart = (e) => {
-  if (e.target.dataset?.itemId === undefined) return
-  dragging.value = true
-  dragItem.value = sortableItems.value.find((item) => item.id === e.target.dataset.itemId)
-}
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+const handleDragStart = (e) => {
+  if (e.target.dataset?.itemId === undefined) return
+  // dragging.value = true
+  dragItem.value = sortableItems.value.find((item) => item.id === e.target.dataset.itemId)
+}
+
 const handleDragOver = async (e) => {
   await sleep(50)
-  if (dragging.value === false) return
+  // if (dragging.value === false) return
   e.preventDefault()
 
-  if (e.target.closest('li') === dragItem.value) return
-  dragOverItem.value = e.target.closest('li')
-  dragOverIndex.value = sortableItems.value.findIndex((item) => item.id === dragOverItem.value.dataset.itemId)
+  dragOverElement.value = e.target.closest('li')
+  dragOverIndex.value = sortableItems.value.findIndex((item) => item.id === dragOverElement.value.dataset.itemId)
   
   if (dragOverIndex.value === sortableItems.value.indexOf(dragItem.value)) return
   ; [sortableItems.value[sortableItems.value.indexOf(dragItem.value)], sortableItems.value[dragOverIndex.value]] = [sortableItems.value[dragOverIndex.value], sortableItems.value[sortableItems.value.indexOf(dragItem.value)]]
 }
 
 const handleDragEnd = async () => {
-  if (dragging.value === false) return
+  // if (dragging.value === false) return
   await sleep(50)
   
-  dragging.value = false
+  // dragging.value = false
   dragItem.value = null 
 }
 
@@ -59,7 +58,7 @@ const handleDrop = (e) => {
       :key="index"
       :id="item.id"
       :draggingItemId="dragItem?.id"
-      width="60rem"
+      width="40rem"
       contentHeight="10rem"
       @dragstart="handleDragStart"
       @dragend="handleDragEnd"
